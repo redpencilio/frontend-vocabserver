@@ -84,6 +84,7 @@
   },
   "dependencies": {
     "date-fns": "^2.29.3",
-    "ember-resources": "^5.6.3"
+    "ember-resources": "^5.6.3",
+    "vocab-search-search-bar": "0.1.0"
   }
 }
