@@ -1,5 +1,8 @@
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
+import Job from '../../models/job';
+import config from 'frontend-vocab-search-admin/config/constants';
+
 export default class VocabulariesShowIndexRoute extends Route {
   @service store;
 
