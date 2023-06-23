@@ -89,4 +89,9 @@ export default class VocabularyMappingAndUnificationController extends Controlle
     this.model.vocabulary.name = newName;
     await this.model.vocabulary.save();
   }
+
+  @action
+  reloadModel() {
+    this.refresh();
+  }
 }
