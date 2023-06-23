@@ -14,7 +14,7 @@ export default class VocabularyUnificationRoute extends Route {
       sort: '-classes.entities',
     });
     if (ds.length) {
-      const vocabulary = await ds.firstObject.vocabulary;
+      const vocabulary = await ds[0].vocabulary;
       // We sort by descending number of class entities and consider the dataset
       // with the largest number of entities as the "primary" one.
       const lastUnification = (
@@ -24,9 +24,9 @@ export default class VocabularyUnificationRoute extends Route {
           'page[size]': 1,
           sort: '-created',
         })
-      ).firstObject;
+      )[0];
       return {
-        dataset: ds.firstObject,
+        dataset: ds[0],
         datasets: ds,
         lastUnification,
         vocabulary,

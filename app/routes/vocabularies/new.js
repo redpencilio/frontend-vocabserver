@@ -4,8 +4,8 @@ import { inject as service } from '@ember/service';
 export default class VocabulariesNewRoute extends Route {
   @service store;
 
-  model() {
-    return this.store.findAll('dataset-type');
+  async model() {
+    return await this.store.findAll('dataset-type');
   }
 
   resetController(controller) {

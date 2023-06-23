@@ -40,7 +40,7 @@ export default class VocabularyMappingAndUnificationController extends Controlle
   @task
   *createAndRunDownloadJob() {
     const runningJobs = [];
-    for (const dataset of this.model.datasets.toArray()) {
+    for (const dataset of this.model.datasets.slice()) {
       const record = this.store.createRecord('vocab-download-job', {
         created: new Date(),
         sources: dataset.get('uri'),
@@ -54,7 +54,7 @@ export default class VocabularyMappingAndUnificationController extends Controlle
 
   @task
   *createAndRunMetadataExtractionJob() {
-    for (const dataset of this.model.datasets.toArray()) {
+    for (const dataset of this.model.datasets.slice()) {
       const record = this.store.createRecord('metadata-extraction-job', {
         created: new Date(),
         sources: dataset.get('uri'),
@@ -69,7 +69,7 @@ export default class VocabularyMappingAndUnificationController extends Controlle
   async handleNewMappingShape(nodeShape) {
     nodeShape.vocabulary = this.model.dataset.get('vocabulary');
     await nodeShape.save();
-    await Promise.all(nodeShape.propertyShapes.map((x) => x.save()));
+    await Promise.all((await nodeShape.propertyShapes).map((x) => x.save()));
     this.send('reloadModel');
   }
 

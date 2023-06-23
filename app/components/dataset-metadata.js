@@ -20,11 +20,13 @@ export default class DatasetMetadataComponent extends Component {
       'filter[:id:]': this.args.dataset.id,
       include: 'classes,properties',
     });
-    this.dataset = datasets.firstObject;
+    this.dataset = datasets[0];
     this.classes = (yield this.dataset.get('classes'))
+      .slice()
       .sortBy('entities')
       .reverseObjects();
     this.properties = (yield this.dataset.get('properties'))
+      .slice()
       .sortBy('entities')
       .reverseObjects();
   }

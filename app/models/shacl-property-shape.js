@@ -8,5 +8,6 @@ export default class ShaclPropertyShape extends Model {
   @attr description;
   @attr minCount;
 
-  @belongsTo('shacl-node-shape') nodeShape;
+  @belongsTo('shacl-node-shape', { inverse: 'propertyShapes', async: true })
+  nodeShape;
 }
