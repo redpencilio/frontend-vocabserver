@@ -24,7 +24,7 @@ export default class VocabulariesShowMappingRoute extends Route {
           'page[size]': 1,
           sort: '-created',
         })
-      ).firstObject;
+      )[0];
       return {
         dataset: ds[0],
         datasets: ds,

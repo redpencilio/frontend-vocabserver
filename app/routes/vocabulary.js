@@ -5,6 +5,6 @@ export default class VocabulariesShowRoute extends Route {
   @service store;
 
   async model(params) {
-    return this.store.findRecord('vocabulary', params.id);
+    return await this.store.findRecord('vocabulary', params.id);
   }
 }

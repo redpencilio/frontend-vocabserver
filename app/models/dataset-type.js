@@ -4,5 +4,5 @@ export default class Dataset extends Model {
   @attr uri;
   @attr prefLabel;
 
-  @hasMany('dataset') datasets;
+  @hasMany('dataset', { inverse: 'type', async: true }) datasets;
 }

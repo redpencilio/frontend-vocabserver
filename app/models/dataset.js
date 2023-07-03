@@ -10,15 +10,15 @@ export default class Dataset extends Model {
   @attr('boolean') dereferenceMembers;
   @attr('number') maxRequests;
 
-  @hasMany('file') dataDumps;
-  @belongsTo('dataset-type') type;
+  @hasMany('file', { inverse: null, async: true }) dataDumps;
+  @belongsTo('dataset-type', { inverse: 'datasets', async: true }) type;
 
   @attr property;
   @attr class;
   @attr entities;
 
-  @hasMany('dataset', { inverse: null }) classes;
-  @hasMany('dataset', { inverse: null }) properties;
+  @hasMany('dataset', { inverse: null, async: true }) classes;
+  @hasMany('dataset', { inverse: null, async: true }) properties;
 
-  @belongsTo('vocabulary') vocabulary;
+  @belongsTo('vocabulary', { inverse: 'dataset', async: true }) vocabulary;
 }

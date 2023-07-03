@@ -83,10 +83,10 @@ export default class MappingShapeCreatorComponent extends Component {
         }
       );
     }
-    const pivotTypeOptions = await this.args.dataset.classes.map(
+    const pivotTypeOptions = (await this.args.dataset.classes).map(
       (x) => x.class
     );
-    const labelPathOptions = await this.args.dataset.properties.map(
+    const labelPathOptions = (await this.args.dataset.properties).map(
       (x) => x.property
     );
     this.formModel = new FormModel(pivotTypeOptions, labelPathOptions, {
@@ -106,7 +106,7 @@ export default class MappingShapeCreatorComponent extends Component {
     this.nodeShape.targetClass = params.pivotType;
     this.labelPropertyShape.path = createPropertyPathStr(params.labelPath);
     // Remove all keyword properties before inserting the new ones
-    this.nodeShape.propertyShapes
+    (await this.nodeShape.propertyShapes)
       .filter((x) => x.description === TAG_PREDICATE)
       .forEach((x) => {
         x.destroyRecord();

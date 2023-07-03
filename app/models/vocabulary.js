@@ -5,6 +5,7 @@ export default class VocabularyModel extends Model {
 
   @attr('string') uri;
 
-  @hasMany('dataset') sourceDatasets;
-  @belongsTo('shacl-node-shape') mappingShape;
+  @hasMany('dataset', { inverse: 'vocabulary', async: true }) sourceDatasets;
+  @belongsTo('shacl-node-shape', { inverse: 'vocabulary', async: true })
+  mappingShape;
 }

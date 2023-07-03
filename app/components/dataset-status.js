@@ -28,7 +28,7 @@ export default class DatasetStatusComponent extends Component {
         sort: '-created',
         'page[size]': 1,
       });
-      if (jobs.length === 1) return jobs.firstObject;
+      if (jobs.length === 1) return jobs[0];
     }
   });
 }

@@ -22,7 +22,7 @@ export default class VocabulariesShowIndexRoute extends Route {
     options.filter = { vocabulary: { ':id:': vocabularyId } };
     options.include = 'type';
     return {
-      dataset: this.store.query('dataset', options),
+      dataset: await this.store.query('dataset', options),
       vocabulary_id: vocabularyId,
     };
   }
