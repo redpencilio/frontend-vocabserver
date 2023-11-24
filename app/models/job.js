@@ -14,6 +14,10 @@ export default class Job extends Model {
 
   @attr('string') status;
 
+  get isRunning() {
+    return this.status === this.RUNNING;
+  }
+
   get hasEnded() {
     return this.status === this.SUCCESS || this.status === this.FAILED;
   }

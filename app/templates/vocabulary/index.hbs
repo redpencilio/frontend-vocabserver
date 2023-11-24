@@ -34,7 +34,11 @@
         <DatasetStatus @jobType='vocab-download-job' @dataset={{dataset}} />
       </td>
       <td>
-        {{#if (fn this.isDump dataset)}}
+        <span
+          {{did-update (perform this.monitorDatasetProgress dataset) dataset}}
+          {{did-insert (perform this.monitorDatasetProgress dataset)}}
+        >
+        {{#if (this.isDownloadAllowed dataset)}}
         <BsButton
             @type="info"
             @onClick={{perform this.createAndRunDownloadJob dataset}}
@@ -42,6 +46,7 @@
             <BsIcon @name="download" />
         </BsButton>
         {{/if}}
+        </span>
         <ConfirmationButton
           @onConfirm={{fn this.deleteDataset dataset}}
           @confirmBtnTxt='Delete'

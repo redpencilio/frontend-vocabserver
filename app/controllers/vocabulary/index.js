@@ -1,9 +1,11 @@
 import Controller from '@ember/controller';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
-import { task } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
 import config from 'frontend-vocab-search-admin/config/constants';
+import Job from '../../models/job';
+import SimpleCache from '../../helpers/SimpleCache';
 
 export default class VocabularyIndexController extends Controller {
   @service store;
@@ -13,6 +15,7 @@ export default class VocabularyIndexController extends Controller {
   @tracked size = 20;
   @tracked ldesDereference = false;
   @tracked ldesMaxRequests = 120;
+  @tracked show = new SimpleCache();
 
   @action
   async switchShowAddSource() {
@@ -20,8 +23,32 @@ export default class VocabularyIndexController extends Controller {
   }
 
   @action
-  isDump(dataset) {
-    return dataset.datasetType.value?.uri === config.DATASET_TYPES.FILE_DUMP;
+  isDownloadAllowed(dataset) {
+    return this.show.get(dataset.uri);
+  }
+
+  @task
+  *monitorDatasetProgress(dataset) {
+    this.show.set(dataset.uri, true);
+    while (true) {
+      let job;
+      const jobs = yield this.store.query('vocab-download-job', {
+        'filter[sources]': dataset.uri,
+        sort: '-created',
+        'page[size]': 1,
+      });
+      if (jobs.length === 1) {
+        job = jobs.firstObject;
+        this.show.set(
+          dataset.uri,
+          !job.isRunning &&
+            dataset.type.get('uri') === config.DATASET_TYPES.FILE_DUMP
+        );
+      } else {
+        this.show.set(dataset.uri, true);
+      }
+      yield timeout(1000);
+    }
   }
 
   @action
