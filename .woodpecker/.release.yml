@@ -2,7 +2,7 @@ steps:
   release:
     image: woodpeckerci/plugin-docker-buildx
     settings:
-      repo: redpencil/frontend-vocabserver
+      repo: redpencilio/frontend-vocabserver
       tags: "${CI_COMMIT_TAG##v}"
       username:
         from_secret: docker_username
